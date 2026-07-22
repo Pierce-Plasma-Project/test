@@ -1,0 +1,41 @@
+[1] Complete fiber over the announced target (-1/4, 0, 0):
+    (0, 0, -1/4)  ->  F = (-1/4, 0, 0)
+    (-1, 3/2, 13/2)  ->  F = (-1/4, 0, 0)
+    (1, -3/2, 13/2)  ->  F = (-1/4, 0, 0)
+    fiber size (complete, exact): 3
+    cross-check via quotient dimension: 3
+
+[2] Generic fiber size (degree of F), random rational targets:
+    fiber over (30/7, -32/7, 32): 3
+    fiber over (-9/2, -30/11, 13/10): 3
+    fiber over (-9/7, -5/3, -4/9): 3
+    fiber over (13/2, 7/11, -18): 3
+    fiber over (-5/3, 6/7, 17/11): 3
+
+[3] Fiber counts along the target line (p, 1, 1) — where the
+    count drops below the generic degree is the non-properness
+    (Jelonek) locus:
+    p = -4: 3 preimage(s)
+    p = -2: 3 preimage(s)
+    p = -1: 3 preimage(s)
+    p = -1/2: 3 preimage(s)
+    p = 0: 1 preimage(s)
+    p = 1/4: 3 preimage(s)
+    p = 1/2: 3 preimage(s)
+    p = 1: 3 preimage(s)
+    p = 2: 3 preimage(s)
+    p = 4: 3 preimage(s)
+
+[4] Probing the conjecture: Jelonek set = {p = 0}?
+    targets ON the plane p=0:
+      (0, 1, 1): 1 preimage(s)
+      (0, 2, 5): 3 preimage(s)
+      (0, 0, 1): 1 preimage(s)
+      (0, -3, 2): 3 preimage(s)
+      (0, 1/3, -7): 3 preimage(s)
+      (0, 1, 0): 3 preimage(s)
+      (0, 0, 0): 1 preimage(s)
+    targets NEAR the plane (p = 1/100):
+      (1/100, 1, 1): 3 preimage(s)
+      (1/100, 2, 5): 3 preimage(s)
+      (1/100, 0, 1): 3 preimage(s)
