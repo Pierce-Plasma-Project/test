@@ -1,0 +1,40 @@
+n=2: 16 functions, all found, max gate complexity = 1
+  gates : #functions
+      0 : 4
+      1 : 12
+  XOR2 (parity)        : 1 gates
+
+n=3: 256 functions, all found, max gate complexity = 4
+  gates : #functions
+      0 : 5
+      1 : 33
+      2 : 114
+      3 : 80
+      4 : 24
+  XOR3 (parity)        : 2 gates
+  MAJ3 (majority)      : 4 gates
+
+n=4: 65536 functions, all found, max gate complexity = 7
+  gates : #functions
+      0 : 6
+      1 : 64
+      2 : 456
+      3 : 2474
+      4 : 10624
+      5 : 24184
+      6 : 24640
+      7 : 3088
+  XOR4 (parity)        : 3 gates
+  THR2_4 (>=2 of 4)    : 7 gates
+  THR3_4 (>=3 of 4)    : 7 gates
+  hardest functions (need 7 gates):
+    truth table 0x0116
+    truth table 0x0117
+    truth table 0x01E9
+    truth table 0x0229
+    truth table 0x022B
+    truth table 0x02D6
+    truth table 0x0449
+    truth table 0x044D
+    (3088 such functions in total)
+
