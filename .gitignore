@@ -1,2 +1,5 @@
 experiments/circuit_complexity/bfs
 experiments/phase_transition/dpll
+experiments/ramsey/enumerate
+experiments/ramsey/solver
+__pycache__/

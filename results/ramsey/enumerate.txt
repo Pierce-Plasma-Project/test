@@ -1,0 +1,6 @@
+[A] K5 pentagon coloring: monochromatic triangles = 0  => R(3,3) > 5  OK
+[B] K6 sweep: 32768 colorings, 0 with no mono triangle  => R(3,3) <= 6  OK
+[C] K8 sweep: 268435456 colorings, 17640 avoid red K3 and blue K4  => R(3,4) > 8  OK
+    first witness (red edge mask, 28 bits): 0x0523A70
+    cyclic witness C8(1,4): verified
+[D] Paley(17): symmetric=yes, 2380 4-subsets checked, red K4 = 0, blue K4 = 0  => R(4,4) > 17  OK

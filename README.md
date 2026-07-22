@@ -25,7 +25,18 @@ possible:
   transition: satisfiability crosses 50% at r ≈ 4.27 with the search-cost
   spike exactly at the threshold. Fixed seed; exactly reproducible.
 
-- **`results/`** — outputs of both experiments as generated in this session.
+- **`experiments/ramsey/` + `notes/ramsey.md`** — the certificate-search
+  skeleton: a general Ramsey CNF encoder, a from-scratch DIMACS DPLL solver,
+  exhaustive enumeration certifiers, and a CDCL driver (CaDiCaL/Glucose via
+  python-sat), wired into an end-to-end machine-verified reproduction of
+  **R(4,4) = 18**. Both computational upper-bound legs carry DRUP
+  unsatisfiability certificates **verified by the official `drat-trim`
+  checker** (`results/ramsey/*.drat`). Lower bounds are certified by
+  exhaustive sweeps (all 2²⁸ colorings of K₈; Paley(17) over all 2,380
+  4-subsets). Same encoder generates the open R(5,5) ∈ [43,46] instance —
+  903 variables, 1.93M clauses — to show exactly where the frontier wall is.
+
+- **`results/`** — outputs of all experiments as generated in this session.
 
 ## Reproduce
 

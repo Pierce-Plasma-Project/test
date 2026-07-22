@@ -1,0 +1,4 @@
+r33_6        UNSAT after 19 decisions
+r34_8        SAT after 20 decisions
+r34_9        UNSAT after 19563 decisions
+r44_18_sym   TIMEOUT at 120s (naive DPLL, cap 2e7 decisions not reached)
