@@ -1,0 +1,8 @@
+det JF = -2
+F(0, 0, -1/4) = (-1/4, 0, 0)
+F(1, -3/2, 13/2) = (-1/4, 0, 0)
+F(-1, 3/2, 13/2) = (-1/4, 0, 0)
+
+VERIFIED: det JF == -2 identically (Keller map), and three distinct
+points share one image. F is a non-injective Keller map: the
+Jacobian conjecture is FALSE for n = 3 (hence all n >= 3).
