@@ -70,6 +70,22 @@ structure: one color holds exactly the non-multiples of 25 — forced safe
 since 16x = 25(z−y) makes x a multiple of 25 — with the multiples of 25
 recursively 2-colored.
 
+**The full a = 16 frontier row** (nine further cells, all beyond the
+published a ≤ 15, all DRAT-certified) completes the picture and reveals a
+fourth regime: for small b the values are **linear in b**,
+R₃ = a³+a²+a+1+2ab, exact at b = 3, 5, 7, 9 (4465…4657) — and the same
+form retrodicts the published-range row a = 7 exactly (400+14b at
+b = 2…5). The law breaks in a transition zone (b = 11, 13, 15: 4576,
+4602, 4620 — non-monotone), then the diagonal and cubic laws take over:
+R₃(16x+17y=17z) = 5169 = 17³+16² and R₃(16x+19y=19z) = 6859 = 19³, both
+**predicted before computing** and hit exactly. Regime summary for coprime
+(a, b), b ≥ 2:
+
+    2 ≤ b ≲ 0.6a : R₃ = a³+a²+a+1+2ab      (linear zone)
+    0.6a ≲ b ≤ a-1: irregular transition
+    b = a+1      : R₃ = b³+a²
+    b ≥ a+2      : R₃ = b³
+
 The regime laws above are stated as *empirical observations with certified
 data points*, not theorems. Given that the published 2025 grid covers
 a ≤ 15, b ≤ 25, its authors have all interior values and would not have

@@ -36,3 +36,18 @@ coprime grid (a=1..7, b=2..7):
   R_3(7x+5y=5z) = 470
   R_3(7x+6y=6z) = 462
 R_3(16x+25y=25z) = 15625 = 25^3  [witness 15624 verified; DRAT VERIFIED]
+
+Frontier row a=16 (all beyond published a<=15; all DRAT-certified VERIFIED):
+  R_3(16x+3y=3z)  = 4465 = a^3+a^2+a+1+2ab
+  R_3(16x+5y=5z)  = 4529 = a^3+a^2+a+1+2ab
+  R_3(16x+7y=7z)  = 4593 = a^3+a^2+a+1+2ab
+  R_3(16x+9y=9z)  = 4657 = a^3+a^2+a+1+2ab
+  R_3(16x+11y=11z) = 4576   (transition zone, law breaks)
+  R_3(16x+13y=13z) = 4602   (transition zone)
+  R_3(16x+15y=15z) = 4620   (transition zone)
+  R_3(16x+17y=17z) = 5169 = b^3+a^2   (b=a+1 law, predicted before computing)
+  R_3(16x+19y=19z) = 6859 = b^3       (b>=a+2 law, predicted before computing)
+  R_3(16x+25y=25z) = 15625 = b^3      (b>=a+2 law)
+
+Linear law cross-check: a=7 row (in published range) obeys the same form:
+  a^3+a^2+a+1+2ab = 400+14b: 428, 442, 456, 470 at b=2..5, breaks at b=6.
