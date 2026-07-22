@@ -4,3 +4,4 @@ R(3,3;6)   upper-bound leaf             40 clauses      0.00s  UNSAT
 R(3,4;9)   upper-bound leaf            210 clauses      0.10s  UNSAT
 R(4,4;17)  witness search             4760 clauses      0.04s  SAT, model independently verified: True
 R(4,4;18)  DIRECT, sym-broken         6137 clauses      0.17s  UNSAT
+R(4,4;18)  DIRECT, raw                6120 clauses   1304.50s  UNDECIDED within 20000000 conflicts

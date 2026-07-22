@@ -110,7 +110,14 @@ result. The checker is the result.
 | Ramsey(3,4;9) | UNSAT, 19,563 decisions | UNSAT, 0.10 s |
 | Ramsey(4,4;17) | (not attempted) | SAT witness, 0.04 s |
 | Ramsey(4,4;18) sym-broken | timeout @ 120 s | **UNSAT, 0.17 s** |
-| Ramsey(4,4;18) raw | (hopeless) | see results file |
+| Ramsey(4,4;18) raw | (hopeless) | undecided after 2×10⁷ conflicts, 1304 s |
+
+The last two rows are the sharpest lesson in the table: the *same* solver,
+on the *same* theorem, goes from >21 minutes and still undecided to 0.17
+seconds when two WLOG constraints (17 sorting clauses + 1 unit) are added.
+Symmetry is the wall, and encoding insight — not raw compute — is what
+moves it. Scaled up, that ratio is why R(5,5) is attacked with full
+lex-leader breaking and cube-and-conquer rather than bigger machines alone.
 
 Same formulas, same machine. Clause learning, watched literals, restarts,
 and activity heuristics are the difference — this measured gap, scaled up,
