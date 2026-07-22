@@ -3,3 +3,5 @@ experiments/phase_transition/dpll
 experiments/ramsey/enumerate
 experiments/ramsey/solver
 __pycache__/
+results/rado/r3_1_26_26_n17576.cnf
+results/rado/r3_16_25_25_*.cnf

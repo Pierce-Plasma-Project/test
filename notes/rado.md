@@ -35,21 +35,44 @@ Frontier work moved to the family ax+by=bz, whose coefficient set
 {a, b, −b} always contains the zero-sum pair {b, −b}: partition regular
 for every (a, b), so every cell is finite and every search terminates.
 
-## Frontier cells (beyond the published grid a ≤ 15, 1 ≤ b ≤ 25)
+## Computed values and the structure they reveal
 
-Primitive cells require gcd(a, b) = 1 (otherwise the equation reduces by
-gcd to an interior cell — that identity is itself validated above).
+All values below were computed this session (streaming encoder + CaDiCaL,
+every SAT witness re-verified independently); UNSAT boundaries carry
+Glucose-DRUP certificates checked by drat-trim where noted. Data in
+`results/rado/grid.txt`, certificates in `results/rado/*.drat`.
 
-Cells being computed, streaming encoder + CaDiCaL, witness-checked at every
-SAT step, Glucose-DRUP + drat-trim certification at the UNSAT boundary:
+**The b-ladder (a = 1):** R₃(x+by=bz) = **b³** for every 3 ≤ b ≤ 10 —
+all eight UNSAT boundaries DRAT-certified (`s VERIFIED`) — and the
+frontier cell one column beyond the published grid:
 
-- **R₃(16x+25y=25z)** — row frontier (a = 16 exceeds the published a ≤ 15).
-- **R₃(x+26y=26z)** — column frontier (b = 26 exceeds the published
-  b ≤ 25). Known SAT at n = 16,384; boundary in the ≥ 17,000 range with
-  ~3–6×10⁷ clauses per instance at the top of the search.
+    R₃(x+26y=26z) = 17,576 = 26³
 
-Results land in `results/rado/` as they complete: value, extremal
-coloring, CNF, DRUP proof, checker verdict.
+confirmed by targeted probes (SAT at 17,575 with verified witness, UNSAT
+at 17,576; ~35M clauses each; CaDiCaL refutes the boundary in 4 s, which
+itself suggests a short structural proof of the b³ law).
+
+**The coprime grid (a ≤ 7, b ≤ 7)** shows a three-regime structure:
+
+- **b ≥ a+2:** R₃ = b³ exactly (all nine such cells);
+- **b = a+1, a ≥ 2:** R₃ = b³ + a² exactly (all five such cells:
+  31, 73, 141, 241, 379);
+- **a > b:** irregular — no simple law fits, and the values are even
+  non-monotone in b (R₃(7x+5y=5z) = 470 > R₃(7x+6y=6z) = 462). This is
+  the regime where tables genuinely have to be computed.
+
+**Row frontier:** R₃(16x+25y=25z) — a = 16 exceeds the published a ≤ 15;
+b − a = 9 puts it in the b³ regime, predicting 15,625 = 25³; the binary
+search has the boundary cornered in (15,624, 15,628] at time of writing.
+
+The regime laws above are stated as *empirical observations with certified
+data points*, not theorems. Given that the published 2025 grid covers
+a ≤ 15, b ≤ 25, its authors have all interior values and would not have
+missed the b³ pattern; the observations should be presumed known (and
+possibly proven by their symbolic-set method, which is designed exactly
+for infinite families). Our frontier cells extend the *data* one step past
+the grid boundary either way, and every value stands on its own
+certificates.
 
 ## Claim hygiene
 
