@@ -35,3 +35,4 @@ coprime grid (a=1..7, b=2..7):
   R_3(7x+4y=4z) = 456
   R_3(7x+5y=5z) = 470
   R_3(7x+6y=6z) = 462
+R_3(16x+25y=25z) = 15625 = 25^3  [witness 15624 verified; DRAT VERIFIED]

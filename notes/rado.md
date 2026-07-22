@@ -62,8 +62,13 @@ itself suggests a short structural proof of the b³ law).
   the regime where tables genuinely have to be computed.
 
 **Row frontier:** R₃(16x+25y=25z) — a = 16 exceeds the published a ≤ 15;
-b − a = 9 puts it in the b³ regime, predicting 15,625 = 25³; the binary
-search has the boundary cornered in (15,624, 15,628] at time of writing.
+b − a = 9 puts it in the b³ regime, and the completed search confirms the
+prediction exactly: **R₃(16x+25y=25z) = 15,625 = 25³** (witness at 15,624
+verified; UNSAT boundary Glucose-DRUP certified, drat-trim VERIFIED, 300 KB
+proof against a 20M-clause instance). The witness has self-similar
+structure: one color holds exactly the non-multiples of 25 — forced safe
+since 16x = 25(z−y) makes x a multiple of 25 — with the multiples of 25
+recursively 2-colored.
 
 The regime laws above are stated as *empirical observations with certified
 data points*, not theorems. Given that the published 2025 grid covers
