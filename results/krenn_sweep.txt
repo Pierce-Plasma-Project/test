@@ -1,0 +1,14 @@
+Krenn-Gu exhaustive sweep, n=6 simple supports, monochromatic edges
+P1: every color class contains a PM; P2: no singleton mixed class
+
+d=3:
+  octahedron: total 531441      P1-pass 1224    survivors 0
+  K6-M2:      total 1594323     P1-pass 6732    survivors 0
+  K6-M1:      total 4782969     P1-pass 37584   survivors 0
+  K6:         total 14348907    P1-pass 248310  survivors 0
+d=4:
+  octahedron: total 16777216    P1-pass 48      survivors 0
+  K6-M2:      total 67108864    P1-pass 192     survivors 0
+  K6-M1:      total 268435456   P1-pass 2304    survivors 0
+  K6:         total 1073741824  P1-pass 44640   survivors 0
+d=5 (K6 only support with 15 edges): RUNNING
