@@ -8,3 +8,7 @@ results/rado/r3_16_25_25_*.cnf
 experiments/krenn/sweep
 experiments/krenn/inst_*
 experiments/krenn/survivors_*
+experiments/krenn/sweep2
+experiments/krenn/inst2_*
+experiments/krenn/edges_*
+experiments/krenn/surv2_*

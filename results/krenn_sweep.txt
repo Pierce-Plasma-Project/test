@@ -20,3 +20,13 @@ CONCLUSION: for every d in {3,4,5} (d>=6 impossible: 3d > 15 edges),
 every support, every coloring fails P1 or P2. No 6-vertex simple-support
 monochromatic-edge GHZ graph of dimension >= 3 exists, for any complex
 weights (modulo the Chandran-Gajjala 4-connectivity reduction).
+
+Bichromatic budget k=1 (one edge with distinct endpoint colors), d=3:
+  octahedron: total 12754584    P1-pass 7776     survivors 0
+  K6-M2:      total 41452398    P1-pass 58320    survivors 0
+  K6-M1:      total 133923132   P1-pass 413424   survivors 0
+  K6:         total 430467210   P1-pass 3382560  survivors 0
+Edge-count prune: k bichromatic edges leave E-k mono edges, and d
+disjoint mono PMs need 3d <= E-k; hence d=5 impossible for k>=1, and
+d=4 impossible for octahedron k>=1, K6-M2 k>=2.
+(k=0 cross-check: sweep2 reproduces sweep1 exactly on K6 d=3.)
