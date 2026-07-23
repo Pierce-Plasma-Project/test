@@ -12,3 +12,6 @@ experiments/krenn/sweep2
 experiments/krenn/inst2_*
 experiments/krenn/edges_*
 experiments/krenn/surv2_*
+experiments/krenn/fs_*
+experiments/krenn/fe_*
+experiments/krenn/k6d4k2_round*
