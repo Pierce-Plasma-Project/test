@@ -30,3 +30,9 @@ Edge-count prune: k bichromatic edges leave E-k mono edges, and d
 disjoint mono PMs need 3d <= E-k; hence d=5 impossible for k>=1, and
 d=4 impossible for octahedron k>=1, K6-M2 k>=2.
 (k=0 cross-check: sweep2 reproduces sweep1 exactly on K6 d=3.)
+
+Bichromatic k=2, d=3 (all four supports): zero survivors.
+  octahedron: total 140300424   P1-pass 15552     survivors 0
+  K6-M2:      total 497428776   P1-pass 183168    survivors 0
+  K6-M1:      total 1741000716  P1-pass 1765152   survivors 0
+  K6:         total 6026540940  P1-pass 18604080  survivors 0

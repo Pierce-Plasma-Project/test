@@ -93,6 +93,8 @@ static void pair_loop(int idx, int mono_edges[], int nm)
     }
 }
 
+static int shard = -1, shard2 = -1;
+
 static void choose(int start, int got)
 {
     if (got == K) {
@@ -105,7 +107,11 @@ static void choose(int start, int got)
         pair_loop(0, mono_edges, nm);
         return;
     }
-    for (int i = start; i < E; i++) { bic[got] = i; choose(i + 1, got + 1); }
+    for (int i = start; i < E; i++) {
+        if (got == 0 && shard >= 0 && i != shard) continue;
+        if (got == 1 && shard2 >= 0 && i != shard2) continue;
+        bic[got] = i; choose(i + 1, got + 1);
+    }
 }
 
 int main(int argc, char **argv)
@@ -113,6 +119,8 @@ int main(int argc, char **argv)
     FILE *f = fopen(argv[1], "r");
     if (!f) { perror(argv[1]); return 1; }
     D = atoi(argv[2]); K = atoi(argv[3]);
+    if (argc > 4) shard = atoi(argv[4]);
+    if (argc > 5) shard2 = atoi(argv[5]);
     if (fscanf(f, "%d %d %d", &E, &NPM, &N) != 3) return 1;
     half = N / 2;
     for (int m = 0; m < NPM; m++) {
