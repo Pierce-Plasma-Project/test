@@ -50,8 +50,10 @@ Edge count caps the dimension: d disjoint monochromatic matchings need
 3d ≤ 15, so d ≤ 5.
 
 Result of the exhaustive sweep over every edge coloring of every
-support (d = 3: 21.3M colorings; d = 4 and d = 5: see
-`results/krenn_sweep.txt`): **every single coloring fails P1 or P2.**
+support — 21.3M colorings at d = 3, 1.43G at d = 4, 30.5G at d = 5
+(where the 720 P1-passers are exactly the ordered 1-factorizations of
+K₆, 6·5! — matching the classical count, an independent correctness
+check on the sweep): **every single coloring fails P1 or P2.**
 
 **Machine-verified statement.** *No 6-vertex graph with simple support
 and monochromatic edges is a GHZ graph of dimension ≥ 3, for any complex

@@ -11,4 +11,12 @@ d=4:
   K6-M2:      total 67108864    P1-pass 192     survivors 0
   K6-M1:      total 268435456   P1-pass 2304    survivors 0
   K6:         total 1073741824  P1-pass 44640   survivors 0
-d=5 (K6 only support with 15 edges): RUNNING
+d=5 (K6 only support with 15 edges):
+  K6:         total 30517578125 P1-pass 720     survivors 0
+  (P1-passers = ordered proper 1-factorizations of K6: 6 x 5! = 720,
+   matching the classical count -- an independent correctness check)
+
+CONCLUSION: for every d in {3,4,5} (d>=6 impossible: 3d > 15 edges),
+every support, every coloring fails P1 or P2. No 6-vertex simple-support
+monochromatic-edge GHZ graph of dimension >= 3 exists, for any complex
+weights (modulo the Chandran-Gajjala 4-connectivity reduction).
