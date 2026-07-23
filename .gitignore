@@ -15,3 +15,9 @@ experiments/krenn/surv2_*
 experiments/krenn/fs_*
 experiments/krenn/fe_*
 experiments/krenn/k6d4k2_round*
+experiments/krenn/hillclimb
+experiments/krenn/tab_*
+experiments/krenn/hits_*
+experiments/krenn/hc*
+experiments/krenn/he_*
+experiments/krenn/hit_*
