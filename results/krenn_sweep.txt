@@ -36,3 +36,11 @@ Bichromatic k=2, d=3 (all four supports): zero survivors.
   K6-M2:      total 497428776   P1-pass 183168    survivors 0
   K6-M1:      total 1741000716  P1-pass 1765152   survivors 0
   K6:         total 6026540940  P1-pass 18604080  survivors 0
+
+Bichromatic k=1, d=4 (where 3d <= E-k permits): zero survivors.
+  K6-M2:      total 2617245696   P1-pass 576     survivors 0
+  K6-M1:      total 11274289152  P1-pass 13824   survivors 0
+  K6:         total 48318382080  P1-pass 414720  survivors 0
+Bichromatic k=2, d=4:
+  K6-M1:      total 219848638464 P1-pass 20736   survivors 0
+  K6:         1.07T in 4 sharded rounds - in progress
