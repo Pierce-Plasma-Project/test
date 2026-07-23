@@ -44,3 +44,19 @@ Bichromatic k=1, d=4 (where 3d <= E-k permits): zero survivors.
 Bichromatic k=2, d=4:
   K6-M1:      total 219848638464 P1-pass 20736   survivors 0
   K6:         1.07T in 4 sharded rounds - in progress
+
+=== PIVOT: structured hunt (matrix-weight formulation, symmetry ansatze) ===
+Literature: n=6 d=3 closed (Cervera-Lierta-Krenn-Aspuru-Guzik SAT, dim<3
+at 6 particles; dim<4 at 8). Smallest open cell: n=8, d=3.
+Full quantum generality: each pair carries a dxd amplitude matrix
+(subsumes all multigraphs + bichromatic colorings). Table generation
+validated against the known K4 d=3 GHZ graph (81/81 classes exact).
+
+Exhaustive finite-field hunts (zero survivors so far):
+  n=4 cc GF(4): 4096          n=4 cc F7: 117649
+  n=6 cc GF(4): 262144        n=6 cc F7: 40353607
+  n=8 dd GF(4): 65536         n=8 dd F7: 5764801
+  n=8 cc GF(4): 16777216      n=8 cc F7: 13.8G in progress
+(cc = circulant + color-cyclic, dd = distance/diagonal ansatz;
+ GF(4) and F7 both contain cube roots of unity, the natural d=3
+ amplitude alphabet; an F_q hit would lift to an exact C candidate)
