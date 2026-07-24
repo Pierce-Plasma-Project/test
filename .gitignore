@@ -39,3 +39,6 @@ experiments/krenn/cdesc
 experiments/krenn/opt8_*.txt
 experiments/krenn/ghz_sol_*.npy
 experiments/krenn/f13*.txt
+experiments/krenn/optlog_*
+experiments/krenn/opt8_*
+experiments/krenn/optcc_*

@@ -73,49 +73,45 @@ for kappa in itertools.product(range(D), repeat=N):
         mats.append([vidx(u, v, kappa[u], kappa[v]) for (u, v) in pm])
     CLASSES.append((len(set(kappa)) == 1, np.array(mats, dtype=np.int64)))
 
-MONO = [i for i, (m, _) in enumerate(CLASSES) if m]
-MIX = [i for i, (m, _) in enumerate(CLASSES) if not m]
-MATS = [c[1] for c in CLASSES]             # list of (105 x N/2) index arrays
+MONO = np.array([i for i, (m, _) in enumerate(CLASSES) if m])
+MIX = np.array([i for i, (m, _) in enumerate(CLASSES) if not m])
+# stacked index tensor: (NC, NPM, half) — every class, every matching, every edge
+IDX = np.stack([c[1] for c in CLASSES]).astype(np.int64)   # (NC, NPM, half)
 
 
 def weights(z):
-    """z: complex vector length NV. Returns complex class weights (len NC)."""
-    out = np.empty(len(CLASSES), dtype=np.complex128)
-    for ci, mats in enumerate(MATS):
-        out[ci] = np.prod(z[mats], axis=1).sum()
-    return out
+    """All class weights at once: prod over edges, sum over matchings."""
+    return np.prod(z[IDX], axis=2).sum(axis=1)              # (NC,)
 
 
 def residuals(x):
     z = x[:NV] + 1j * x[NV:]
     w = weights(z)
-    res = []
-    for ci in MIX:
-        res.append(w[ci].real); res.append(w[ci].imag)
-    for ci in MONO:
-        res.append(w[ci].real - 1.0); res.append(w[ci].imag)   # pin to 1
-    return np.array(res)
+    wm = w[MIX]
+    wc = w[MONO] - 1.0                                       # pin monos to 1
+    return np.concatenate([wm.real, wm.imag, wc.real, wc.imag])
 
 
 def run():
     print(f"n={N} d={D} ansatz={ANSATZ} NV={NV} classes={len(CLASSES)} "
           f"(mono {len(MONO)}, mixed {len(MIX)}) PMs={len(PMS)}", flush=True)
     best = np.inf
-    rng = np.random.default_rng()
+    logf = open(f"optlog_{ANSATZ}_{N}_{SEED_LO}.txt", "w")
     for seed in range(SEED_LO, SEED_HI):
         r = np.random.default_rng(seed)
         x0 = r.standard_normal(2 * NV) * 0.5
-        sol = least_squares(residuals, x0, method="lm", max_nfev=4000)
-        c = 2 * sol.cost                     # sum of squared residuals
+        sol = least_squares(residuals, x0, method="lm", max_nfev=300)
+        c = 2 * sol.cost
         if c < best:
             best = c
-            print(f"  seed {seed}: residual^2 = {c:.3e}", flush=True)
+            logf.write(f"seed {seed}: residual^2 = {c:.3e}\n"); logf.flush()
         if c < 1e-16:
             z = sol.x[:NV] + 1j * sol.x[NV:]
             print("SOLUTION (numerical): residual", c)
             np.save(f"ghz_sol_n{N}_{seed}.npy", z)
             print("saved; rationalize + exact-verify next")
             return z
+    logf.write(f"DONE best residual^2 = {best:.3e}\n"); logf.flush(); logf.close()
     print(f"no numerical GHZ graph found; best residual^2 = {best:.3e}")
     return None
 
