@@ -36,3 +36,6 @@ experiments/krenn/cross_tab.txt
 experiments/krenn/cs_*
 experiments/krenn/cse_*
 experiments/krenn/cdesc
+experiments/krenn/opt8_*.txt
+experiments/krenn/ghz_sol_*.npy
+experiments/krenn/f13*.txt
