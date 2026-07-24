@@ -26,17 +26,19 @@ static unsigned char *S;                 /* class sums */
 static int *inc, *incoff;                /* var -> monomial indices */
 static int V[512];
 static int Q = 4;
-static int fmul[16][16], fadd[16][16], fsub[16][16];
+static int fmul[16][16], fadd[16][16], fsub[16][16], finv[16];
 static void field_init(void) {
     if (Q == 4) {
         int mt[4][4] = {{0,0,0,0},{0,1,2,3},{0,2,3,1},{0,3,1,2}};
         for (int i = 0; i < 4; i++) for (int j = 0; j < 4; j++) {
             fmul[i][j] = mt[i][j]; fadd[i][j] = i ^ j; fsub[i][j] = i ^ j;
         }
+        finv[1] = 1; finv[2] = 3; finv[3] = 2;
     } else {
         for (int i = 0; i < Q; i++) for (int j = 0; j < Q; j++) {
             fmul[i][j] = (i * j) % Q; fadd[i][j] = (i + j) % Q;
             fsub[i][j] = (i - j + Q) % Q;
+            if ((i * j) % Q == 1) finv[i] = j;
         }
     }
 }
@@ -147,30 +149,64 @@ int main(int argc, char **argv)
         for (int v = 0; v < NV; v++)
             V[v] = (rnd() % 100 < 12) ? (int)(rnd() % (Q - 1)) + 1 : 0;
         if (NV == 252) {
-            int pm[3][4][2] = {
-                {{0,1},{2,3},{4,5},{6,7}},
-                {{0,2},{1,3},{4,6},{5,7}},
-                {{0,3},{1,2},{4,7},{5,6}}};
-            for (int c3 = 0; c3 < 3; c3++)
-                for (int e = 0; e < 4; e++) {
-                    int u = pm[c3][e][0], v2 = pm[c3][e][1];
-                    int pi = u * (15 - u) / 2 + (v2 - u - 1);
-                    V[pi * 9 + c3 * 3 + c3] = 1;
+            if (r % 2 == 0) {              /* block scaffold */
+                int pm[3][4][2] = {
+                    {{0,1},{2,3},{4,5},{6,7}},
+                    {{0,2},{1,3},{4,6},{5,7}},
+                    {{0,3},{1,2},{4,7},{5,6}}};
+                for (int c3 = 0; c3 < 3; c3++)
+                    for (int e = 0; e < 4; e++) {
+                        int u = pm[c3][e][0], v2 = pm[c3][e][1];
+                        int pi = u * (15 - u) / 2 + (v2 - u - 1);
+                        V[pi * 9 + c3 * 3 + c3] = 1;
+                    }
+            } else {                       /* round-robin factors 0,1,2 */
+                for (int c3 = 0; c3 < 3; c3++) {
+                    int rr = c3, u, v2;
+                    u = 7; v2 = rr;
+                    { int a = u < v2 ? u : v2, b = u < v2 ? v2 : u;
+                      int pi = a * (15 - a) / 2 + (b - a - 1);
+                      V[pi * 9 + c3 * 3 + c3] = 1; }
+                    for (int i = 1; i <= 3; i++) {
+                        int x = (rr + i) % 7, y = (rr - i + 7) % 7;
+                        int a = x < y ? x : y, b = x < y ? y : x;
+                        int pi = a * (15 - a) / 2 + (b - a - 1);
+                        V[pi * 9 + c3 * 3 + c3] = 1;
+                    }
                 }
+            }
         }
         full_eval();
         int c = cost();
         for (long mv = 0; mv < moves && c; mv++) {
-            /* focused move: pick a violated class, then a variable in it */
-            int v;
-            int tries = 0;
+            /* pick a violated class */
+            int ci = -1, tries = 0;
             for (;;) {
-                int ci = rnd() % NC;
-                int bad = cmono[ci] ? (S[ci] == 0) : (S[ci] != 0);
-                if (bad || ++tries > 64) {
-                    long mi = (long)ci * NPM + rnd() % NPM;
-                    v = mons[mi * half + rnd() % half];
-                    break;
+                int c2i = rnd() % NC;
+                int bad = cmono[c2i] ? (S[c2i] == 0) : (S[c2i] != 0);
+                if (bad || ++tries > 128) { ci = c2i; break; }
+            }
+            long mi = (long)ci * NPM + rnd() % NPM;
+            int v = mons[mi * half + rnd() % half];
+            /* repair move (60%): solve this entry so the class cancels */
+            if (!cmono[ci] && S[ci] && rnd() % 100 < 60) {
+                const unsigned short *mo = mons + mi * half;
+                int pi = 1, npos = 0, pos[4];
+                for (int t = 0; t < half; t++) {
+                    if (mo[t] == v && !npos) { pos[npos++] = t; continue; }
+                    pi = fmul[pi][V[mo[t]]];
+                }
+                if (pi != 0) {
+                    /* want new product = old product - S[ci] */
+                    int target = fsub[prod[mi]][S[ci]];
+                    int nu = fmul[target][finv[pi]];
+                    int old2 = V[v];
+                    if (nu != old2) {
+                        set_var(v, nu);
+                        int c2 = cost();
+                        if (c2 <= c + 4) c = c2; else set_var(v, old2);
+                    }
+                    continue;
                 }
             }
             int old = V[v];
