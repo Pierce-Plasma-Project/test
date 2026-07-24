@@ -25,7 +25,21 @@ static unsigned char *prod;              /* cached product per monomial */
 static unsigned char *S;                 /* class sums */
 static int *inc, *incoff;                /* var -> monomial indices */
 static int V[512];
-static int gf4mul[4][4] = {{0,0,0,0},{0,1,2,3},{0,2,3,1},{0,3,1,2}};
+static int Q = 4;
+static int fmul[16][16], fadd[16][16], fsub[16][16];
+static void field_init(void) {
+    if (Q == 4) {
+        int mt[4][4] = {{0,0,0,0},{0,1,2,3},{0,2,3,1},{0,3,1,2}};
+        for (int i = 0; i < 4; i++) for (int j = 0; j < 4; j++) {
+            fmul[i][j] = mt[i][j]; fadd[i][j] = i ^ j; fsub[i][j] = i ^ j;
+        }
+    } else {
+        for (int i = 0; i < Q; i++) for (int j = 0; j < Q; j++) {
+            fmul[i][j] = (i * j) % Q; fadd[i][j] = (i + j) % Q;
+            fsub[i][j] = (i - j + Q) % Q;
+        }
+    }
+}
 
 static unsigned long rng;
 static inline unsigned long rnd(void)
@@ -55,9 +69,9 @@ static void full_eval(void)
             long mi = (long)ci * NPM + m;
             const unsigned short *mo = mons + mi * half;
             int p = V[mo[0]];
-            for (int t = 1; t < half; t++) p = gf4mul[p][V[mo[t]]];
+            for (int t = 1; t < half; t++) p = fmul[p][V[mo[t]]];
             prod[mi] = p;
-            S[ci] ^= p;
+            S[ci] = fadd[S[ci]][p];
         }
 }
 
@@ -68,8 +82,8 @@ static void set_var(int v, int val)
         long mi = inc[k];
         const unsigned short *mo = mons + mi * half;
         int p = V[mo[0]];
-        for (int t = 1; t < half; t++) p = gf4mul[p][V[mo[t]]];
-        S[mi / NPM] ^= prod[mi] ^ p;
+        for (int t = 1; t < half; t++) p = fmul[p][V[mo[t]]];
+        S[mi / NPM] = fadd[fsub[S[mi / NPM]][prod[mi]]][p];
         prod[mi] = p;
     }
 }
@@ -81,6 +95,8 @@ int main(int argc, char **argv)
     rng = argc > 2 ? atol(argv[2]) : 12345;
     long restarts = argc > 3 ? atol(argv[3]) : 1000;
     long moves = argc > 4 ? atol(argv[4]) : 200000;
+    if (argc > 5) Q = atoi(argv[5]);
+    field_init();
     if (fscanf(f, "%d %d %d %d %d", &NV, &NC, &NPM, &n, &d) != 5) return 1;
     half = n / 2;
     cmono = malloc(NC * sizeof(int));
@@ -129,7 +145,7 @@ int main(int argc, char **argv)
         /* scaffold init: three edge-disjoint PMs of K8 carry the mono
            backbone (entries W[c][c]=1); sparse random elsewhere */
         for (int v = 0; v < NV; v++)
-            V[v] = (rnd() % 100 < 12) ? (int)(rnd() % 3) + 1 : 0;
+            V[v] = (rnd() % 100 < 12) ? (int)(rnd() % (Q - 1)) + 1 : 0;
         if (NV == 252) {
             int pm[3][4][2] = {
                 {{0,1},{2,3},{4,5},{6,7}},
@@ -161,14 +177,14 @@ int main(int argc, char **argv)
             /* try the best of the 3 alternative values (greedy),
                with occasional pure-random noise */
             if (rnd() % 100 < 15) {
-                int nu = rnd() % 4;
+                int nu = rnd() % Q;
                 if (nu == old) continue;
                 set_var(v, nu);
                 int c2 = cost();
                 if (c2 <= c + 2) c = c2; else set_var(v, old);
             } else {
                 int bestv = old, bestc = c;
-                for (int nu = 0; nu < 4; nu++) {
+                for (int nu = 0; nu < Q; nu++) {
                     if (nu == old) continue;
                     set_var(v, nu);
                     int c2 = cost();
