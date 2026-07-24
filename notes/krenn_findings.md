@@ -69,3 +69,21 @@ defeats the six-term cross-obstruction — the analogue, in this problem, of
 knowing exactly which polynomial map to write down for the Jacobian
 counterexample. That is a human-insight step; brute force at accessible
 scales has been exhausted here without success.
+
+## Update: the cost-6 obstruction is a strict local minimum (exact)
+
+The surgical cross-block attack (`crosssearch.c`, `cdesc.c`): freeze the
+two K4 blocks at the GHZ solution, vary only the 144 cross-block
+amplitudes. Deterministic exhaustive result over F7:
+- block solution (no cross edges) has cost exactly 6;
+- NO single-variable change to any cross amplitude reduces cost below 6;
+- greedy multi-step descent from the block solution terminates at 6.
+
+So the block scaffold is a strict local minimum: the six GHZ3(x)GHZ3
+cross terms cannot be removed by any local perturbation of cross-block
+amplitudes. (Not a full proof — the exact global decision is a Groebner
+computation over Q(omega) in 144 variables, beyond in-window compute, and
+non-local paths are not excluded — but it is exact local evidence, far
+stronger than the stochastic floors.) A counterexample from a two-block
+construction is locally ruled out; any counterexample must be genuinely
+non-blockwise.
