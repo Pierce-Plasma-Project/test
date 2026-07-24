@@ -31,3 +31,7 @@ experiments/krenn/inst2_*
 experiments/krenn/edges_*
 experiments/krenn/f10fix_*
 f10fix_*
+experiments/krenn/crosssearch
+experiments/krenn/cross_tab.txt
+experiments/krenn/cs_*
+experiments/krenn/cse_*
