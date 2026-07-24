@@ -60,3 +60,11 @@ Exhaustive finite-field hunts (zero survivors so far):
 (cc = circulant + color-cyclic, dd = distance/diagonal ansatz;
  GF(4) and F7 both contain cube roots of unity, the natural d=3
  amplitude alphabet; an F_q hit would lift to an exact C candidate)
+
+n=10 exhaustive (corrected binary, coefficient bug fixed and shard 0
+re-verified): circulant color-cyclic ansatz over GF(4), all 4^15 =
+1,073,741,824 assignments in 16 shards: ZERO survivors. The n=10
+circulant-colorcyclic GHZ system has no GF(4) solution.
+(The earlier 3 'survivors' were char-2 coefficient artifacts, killed
+by hand-check: lambda*I on K_{5,5} has mono sums 120*lambda^5 = 0 in
+char 2. Bug fixed in commit cef3ed0.)
