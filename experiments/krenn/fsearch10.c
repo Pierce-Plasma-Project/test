@@ -109,7 +109,7 @@ int main(int argc, char **argv)
                     if (fmon[fi][j][t + 1] != tup[m][t]) { same = 0; break; }
                 if (same) { found = j; break; }
             }
-            if (found >= 0) fmon[fi][found][0] = (fmon[fi][found][0] + 1) % Q;
+            if (found >= 0) fmon[fi][found][0] = fadd[fmon[fi][found][0]][1];
             else {
                 fmon[fi][fcnt[fi]][0] = 1 % Q;
                 for (int t = 0; t < HALF; t++)
