@@ -38,9 +38,9 @@ static int cost(void)
     int c = 0, mv = -1;
     for (int i = 0; i < nmono; i++) {
         int s = S[monoidx[i]];
-        if (s == 0) c++;
+        if (s == 0) c += 200;           /* zero-collapse must never win */
         else if (mv < 0) mv = s;
-        else if (s != mv) c++;
+        else if (s != mv) c += 200;
     }
     for (int ci = 0; ci < NC; ci++)
         if (!cmono[ci] && S[ci]) c++;
@@ -126,9 +126,22 @@ int main(int argc, char **argv)
 
     int bestever = 1 << 30;
     for (long r = 0; r < restarts; r++) {
-        /* sparse random init: most entries 0 */
+        /* scaffold init: three edge-disjoint PMs of K8 carry the mono
+           backbone (entries W[c][c]=1); sparse random elsewhere */
         for (int v = 0; v < NV; v++)
-            V[v] = (rnd() % 100 < 22) ? (int)(rnd() % 3) + 1 : 0;
+            V[v] = (rnd() % 100 < 12) ? (int)(rnd() % 3) + 1 : 0;
+        if (NV == 252) {
+            int pm[3][4][2] = {
+                {{0,1},{2,3},{4,5},{6,7}},
+                {{0,2},{1,3},{4,6},{5,7}},
+                {{0,3},{1,2},{4,7},{5,6}}};
+            for (int c3 = 0; c3 < 3; c3++)
+                for (int e = 0; e < 4; e++) {
+                    int u = pm[c3][e][0], v2 = pm[c3][e][1];
+                    int pi = u * (15 - u) / 2 + (v2 - u - 1);
+                    V[pi * 9 + c3 * 3 + c3] = 1;
+                }
+        }
         full_eval();
         int c = cost();
         for (long mv = 0; mv < moves && c; mv++) {
